@@ -198,9 +198,8 @@ namespace tretyakov
   class ColoredCircle: public Planar, public Colored
   {
   public:
-    ColoredCircle(Point p, int radius, Color color):
-      center_(p),
-      radius_(radius),
+    ColoredCircle(Point p, int r, Color color):
+      cir_(p, r),
       color_(color)
     {}
     virtual ~ColoredCircle() = default;
@@ -211,15 +210,15 @@ namespace tretyakov
     }
     virtual int x() const override
     {
-      return center_.x();
+      return cir_.x();
     }
     virtual int y() const override
     {
-      return center_.y();
+      return cir_.y();
     }
     virtual int abs_sqr() const override
     {
-      return center_.x() * center_.x() + center_.y() * center_.y();
+      return cir_.abs_sqr();
     }
     virtual Color getColor() const override
     {
@@ -230,8 +229,7 @@ namespace tretyakov
       color_ = color;
     }
   private:
-    Point center_;
-    int radius_;
+    Circle cir_;
     Color color_;
   };
 }
