@@ -153,14 +153,86 @@ namespace tretyakov
   class Circle: public Planar
   {
   public:
-    Circle();
+    Circle(Point p, int radius):
+      center_(p),
+      radius_(radius)
+    {}
     virtual ~Circle() = default;
+
+    virtual std::ostream& info(std::ostream& out) override
+    {
+      return out << "Circle";
+    }
+    virtual int x() const override
+    {
+      return center_.x();
+    }
+    virtual int y() const override
+    {
+      return center_.y();
+    }
+    virtual int abs_sqr() const override
+    {
+      return center_.x() * center_.x() + center_.y() * center_.y();
+    }
+    double sqr() const
+    {
+      return 3.14 * radius_ * radius_;
+    }
+    void move(Point p)
+    {
+      center_ = p;
+    }
+    void resize(int r)
+    {
+      if (r > 0)
+      {
+        radius_ = r;
+      }
+    }
+  private:
+    Point center_;
+    int radius_;
   };
 
-  class ColoredCircle: public Circle, public Planar
+  class ColoredCircle: public Planar, public Colored
   {
   public:
-    Point center();
+    ColoredCircle(Point p, int radius, Color color):
+      center_(p),
+      radius_(radius),
+      color_(color)
+    {}
+    virtual ~ColoredCircle() = default;
+
+    virtual std::ostream& info(std::ostream& out) override
+    {
+      return out << "Colored circle";
+    }
+    virtual int x() const override
+    {
+      return center_.x();
+    }
+    virtual int y() const override
+    {
+      return center_.y();
+    }
+    virtual int abs_sqr() const override
+    {
+      return center_.x() * center_.x() + center_.y() * center_.y();
+    }
+    virtual Color getColor() const override
+    {
+      return color_;
+    }
+    virtual void setColor(Color color) override
+    {
+      color_ = color;
+    }
+  private:
+    Point center_;
+    int radius_;
+    Color color_;
   };
 }
 
